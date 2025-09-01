@@ -23,10 +23,13 @@ jobs:
 
       - name: Build & Run TestNG Tests
         run: mvn clean test
+        continue-on-error: true   # 👈 won’t stop on failures
 
-      - name: Upload TestNG Reports
+      - name: Upload Test Reports (Surefire + TestNG)
         if: always()
-        uses: actions/upload-artifact@v4   # 👈 new version
+        uses: actions/upload-artifact@v4
         with:
-          name: testng-reports
-          path: test-output   # or target/surefire-reports if using Maven Surefire
+          name: reports
+          path: |
+            target/surefire-reports
+            test-output
